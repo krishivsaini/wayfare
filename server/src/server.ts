@@ -4,6 +4,7 @@ import cors from "cors";
 import { env } from "./config/env";
 import { connectDB } from "./config/db";
 import authRouter from "./routes/auth";
+import tripsRouter from "./routes/trips";
 import { errorHandler } from "./middleware/errorHandler";
 
 export async function buildApp() {
@@ -16,6 +17,7 @@ export async function buildApp() {
 
   app.get("/health", (_req, res) => res.json({ ok: true }));
   app.use("/auth", authRouter);
+  app.use("/trips", tripsRouter);
 
   app.use(errorHandler);
 
