@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Wayfare — calm-utility design system
+   Off-white paper, near-black warm ink, single orange accent used sparingly.
+   Grotesk body (Geist) + JetBrains Mono for all numeric / metadata. */
+
+:root {
+  /* surfaces */
+  --paper:        #F6F4EE;
+  --paper-2:      #F1EEE6;
+  --card:         #FCFBF8;
+  --card-raised:  #FFFFFF;
+
+  /* ink */
+  --ink:          #1B1A16;
+  --ink-2:        #57544B;
+  --ink-3:        #8B877B;
+  --ink-4:        #B6B2A6;
+
+  /* lines */
+  --line:         #E4E0D6;
+  --line-2:       #D8D3C6;
+  --line-strong:  #C7C1B1;
+
+  /* accent — orange, used sparingly */
+  --accent:       #E5481E;
+  --accent-press: #C63C16;
+  --accent-wash:  #FBEAE2;
+  --accent-ink:   #8E2A10;
+
+  /* semantic for confidence / status */
+  --good:         #2E7D55;
+  --good-wash:    #E4F0E8;
+  --warn:         #B5791A;
+  --warn-wash:    #F6EEDB;
+
+  /* radius + shadow (restrained) */
+  --r-sm: 6px;
+  --r:    9px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --shadow-1: 0 1px 2px rgba(27,26,22,.05), 0 1px 1px rgba(27,26,22,.04);
+  --shadow-2: 0 2px 4px rgba(27,26,22,.05), 0 6px 18px rgba(27,26,22,.06);
+  --shadow-pop: 0 12px 40px rgba(27,26,22,.16), 0 2px 8px rgba(27,26,22,.10);
+
+  /* type */
+  --sans: var(--font-geist), "Hanken Grotesk", system-ui, sans-serif;
+  --mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+
+  /* density */
+  --gap: 16px;
+  --card-pad: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+#root, body > div { min-height: 100%; }
+
+::selection { background: var(--accent-wash); color: var(--accent-ink); }
+
+/* meta/mono treatment — labels, numbers, dates, costs */
+.mono {
+  font-family: var(--mono);
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.num { font-family: var(--mono); font-feature-settings: "tnum" 1; }
+
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
+a { color: inherit; }
+
+/* hairline helper */
+.hr { height: 1px; background: var(--line); border: 0; }
+
+/* focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* thin custom scrollbars */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; border: 3px solid var(--paper); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* fade/slide entrance used across screens */
+@keyframes wf-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes wf-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wf-pop  { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes wf-spin { to { transform: rotate(360deg); } }
+.rise { animation: wf-rise .5s cubic-bezier(.2,.7,.2,1) both; }
+.fade { animation: wf-fade .4s ease both; }
+.wf-pop { animation: wf-pop .26s cubic-bezier(.2,.7,.2,1) both; }
+
+/* shimmer for skeletons */
+@keyframes wf-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.skeleton {
+  background: linear-gradient(90deg, var(--paper-2) 25%, #ECE8DE 37%, var(--paper-2) 63%);
+  background-size: 200% 100%;
+  animation: wf-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-sm);
+}
+
+/* button micro-interactions (matches design's ui.jsx) */
+.wf-btn:active { transform: translateY(.5px); }
+.wf-btn-primary:hover { background: var(--accent-press); }
+.wf-btn-default:hover { border-color: var(--line-strong); background: #fff; }
+.wf-btn-ghost:hover   { color: var(--ink); background: var(--paper-2); }
+.wf-btn-quiet:hover   { background: #E9E5DB; }
+.wf-btn-danger:hover  { background: #F6E9E4; color: #8E2A10; }
+.wf-input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(27,26,22,.07); }
+.wf-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-2); transform: translateY(-2px); }
+
+/* range input thumb */
+.wf-range { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 99px; background: var(--line-2); outline: none; }
+.wf-range::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 99px; background: var(--card-raised); border: 1.5px solid var(--ink); box-shadow: var(--shadow-1); cursor: pointer; }
+.wf-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 99px; background: var(--card-raised); border: 1.5px solid var(--ink); cursor: pointer; }
+
+/* trip-detail responsive collapse */
+@media (max-width: 900px) {
+  .wf-trip-grid { grid-template-columns: 1fr !important; }
+  .wf-side { position: static !important; }
+}
