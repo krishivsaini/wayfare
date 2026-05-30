@@ -36,7 +36,27 @@ export default function DashboardPage() {
     );
   }
 
-  const empty = !!trips && trips.length === 0;
+  if (!trips) {
+    return (
+      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
+        <div
+          className="fade"
+          style={{
+            padding: "10px 12px",
+            background: "var(--accent-wash)",
+            border: "1px solid #F0C6B6",
+            borderRadius: "var(--r)",
+            fontSize: 13,
+            color: "var(--accent-ink)",
+          }}
+        >
+          {err}
+        </div>
+      </div>
+    );
+  }
+
+  const empty = trips.length === 0;
 
   return (
     <div style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
@@ -57,7 +77,7 @@ export default function DashboardPage() {
           <h1 style={{ fontSize: 28 }}>
             {empty
               ? "Nothing planned yet"
-              : `${trips!.length} ${trips!.length === 1 ? "itinerary" : "itineraries"}`}
+              : `${trips.length} ${trips.length === 1 ? "itinerary" : "itineraries"}`}
           </h1>
         </div>
         {!empty && (
@@ -88,7 +108,7 @@ export default function DashboardPage() {
         <EmptyTrips />
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))", gap: 18 }}>
-          {trips!.map((t, i) => (
+          {trips.map((t, i) => (
             <TripCard key={t.id} trip={t} idx={i} onDelete={() => handleDelete(t.id)} />
           ))}
         </div>
