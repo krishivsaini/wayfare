@@ -105,7 +105,17 @@ const TripSchema = new Schema<ITrip>({
   hotels: { type: [HotelSchema], default: [] },
   version: { type: Number, default: 1 },
   history: { type: [HistoryEntrySchema], default: [] },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: (_doc, ret: Record<string, unknown>) => {
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+});
 
 TripSchema.index({ userId: 1, createdAt: -1 });
 
