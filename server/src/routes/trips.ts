@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { nanoid } from "nanoid";
 import { requireAuth, AuthedRequest } from "../middleware/requireAuth";
 import { validate } from "../middleware/validate";
+import { validateObjectId } from "../middleware/validateObjectId";
 import {
   CreateTripInputSchema,
   RegenerateDayInputSchema,
@@ -55,7 +56,7 @@ router.post(
   }
 );
 
-router.get("/:id", requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", requireAuth, validateObjectId("id"), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = req as AuthedRequest;
     const trip = await Trip.findOne({ _id: req.params.id, userId: user.id });
@@ -66,7 +67,7 @@ router.get("/:id", requireAuth, async (req: Request, res: Response, next: NextFu
   }
 });
 
-router.delete("/:id", requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/:id", requireAuth, validateObjectId("id"), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = req as AuthedRequest;
     const result = await Trip.findOneAndDelete({ _id: req.params.id, userId: user.id });
@@ -80,6 +81,7 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response, next: Nex
 router.post(
   "/:id/days/:dayNumber/regenerate",
   requireAuth,
+  validateObjectId("id"),
   validate(RegenerateDayInputSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -124,6 +126,7 @@ router.post(
 router.delete(
   "/:id/days/:dayNumber/activities/:activityId",
   requireAuth,
+  validateObjectId("id"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req as AuthedRequest;
@@ -161,6 +164,7 @@ router.delete(
 router.post(
   "/:id/days/:dayNumber/activities",
   requireAuth,
+  validateObjectId("id"),
   validate(AddActivityInputSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -199,6 +203,7 @@ router.post(
 router.post(
   "/:id/hotels/refresh",
   requireAuth,
+  validateObjectId("id"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req as AuthedRequest;
