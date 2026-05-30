@@ -1,10 +1,10 @@
 import { nanoid } from "nanoid";
-import { genai } from "./gemini";
-import { GenerateTripLLMResponseSchema, CreateTripInput } from "../shared/schemas";
-import { toGeminiJsonSchema } from "./jsonSchema";
-import { generateTripPrompt } from "./prompts";
-import { withRetry } from "./withRetry";
-import { env } from "../config/env";
+import { genai } from "./gemini.js";
+import { GenerateTripLLMResponseSchema, CreateTripInput } from "../shared/schemas.js";
+import { toGeminiJsonSchema } from "./jsonSchema.js";
+import { generateTripPrompt } from "./prompts.js";
+import { withRetry } from "./withRetry.js";
+import { env } from "../config/env.js";
 
 const responseJsonSchema = toGeminiJsonSchema(GenerateTripLLMResponseSchema);
 

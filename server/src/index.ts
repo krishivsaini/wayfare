@@ -1,5 +1,5 @@
-import { buildApp } from "./server";
-import { env } from "./config/env";
+import { buildApp } from "./server.js";
+import { env } from "./config/env.js";
 
 buildApp().then(app => {
   app.listen(env.PORT, () => {

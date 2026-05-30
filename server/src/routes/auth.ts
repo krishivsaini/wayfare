@@ -1,11 +1,11 @@
 import { Router, Request, Response, NextFunction, CookieOptions } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { env } from "../config/env";
-import { User } from "../models/User";
-import { SignupInputSchema, LoginInputSchema } from "../shared/schemas";
-import { validate } from "../middleware/validate";
-import { requireAuth, AuthedRequest } from "../middleware/requireAuth";
+import { env } from "../config/env.js";
+import { User } from "../models/User.js";
+import { SignupInputSchema, LoginInputSchema } from "../shared/schemas.js";
+import { validate } from "../middleware/validate.js";
+import { requireAuth, AuthedRequest } from "../middleware/requireAuth.js";
 
 const router = Router();
 

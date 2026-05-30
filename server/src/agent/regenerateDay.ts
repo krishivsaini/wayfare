@@ -1,11 +1,11 @@
 import { nanoid } from "nanoid";
-import { genai } from "./gemini";
-import { RegenerateDayLLMResponseSchema, type Activity, type Budget } from "../shared/schemas";
-import { toGeminiJsonSchema } from "./jsonSchema";
-import { regenerateDayPrompt } from "./prompts";
-import { withRetry } from "./withRetry";
-import { env } from "../config/env";
-import type { IDay } from "../models/Trip";
+import { genai } from "./gemini.js";
+import { RegenerateDayLLMResponseSchema, type Activity, type Budget } from "../shared/schemas.js";
+import { toGeminiJsonSchema } from "./jsonSchema.js";
+import { regenerateDayPrompt } from "./prompts.js";
+import { withRetry } from "./withRetry.js";
+import { env } from "../config/env.js";
+import type { IDay } from "../models/Trip.js";
 
 const responseJsonSchema = toGeminiJsonSchema(RegenerateDayLLMResponseSchema);
 

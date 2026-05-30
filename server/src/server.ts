@@ -1,11 +1,11 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { env } from "./config/env";
-import { connectDB } from "./config/db";
-import authRouter from "./routes/auth";
-import tripsRouter from "./routes/trips";
-import { errorHandler } from "./middleware/errorHandler";
+import { env } from "./config/env.js";
+import { connectDB } from "./config/db.js";
+import authRouter from "./routes/auth.js";
+import tripsRouter from "./routes/trips.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 export async function buildApp() {
   await connectDB();

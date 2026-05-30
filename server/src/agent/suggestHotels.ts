@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { genai } from "./gemini";
-import { HotelSchema } from "../shared/schemas";
-import { toGeminiJsonSchema } from "./jsonSchema";
-import { suggestHotelsPrompt } from "./prompts";
-import { withRetry } from "./withRetry";
-import { env } from "../config/env";
+import { genai } from "./gemini.js";
+import { HotelSchema } from "../shared/schemas.js";
+import { toGeminiJsonSchema } from "./jsonSchema.js";
+import { suggestHotelsPrompt } from "./prompts.js";
+import { withRetry } from "./withRetry.js";
+import { env } from "../config/env.js";
 
 const SuggestHotelsResponseSchema = z.object({
   hotels: z.array(HotelSchema).min(2).max(5),

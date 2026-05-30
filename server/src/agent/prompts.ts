@@ -1,4 +1,4 @@
-import { CreateTripInput } from "../shared/schemas";
+import { CreateTripInput } from "../shared/schemas.js";
 
 export function generateTripPrompt(input: CreateTripInput): string {
   return `You are a travel-planning agent. Generate a detailed ${input.numDays}-day itinerary for ${input.destination}.

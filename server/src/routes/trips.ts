@@ -1,17 +1,17 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { nanoid } from "nanoid";
-import { requireAuth, AuthedRequest } from "../middleware/requireAuth";
-import { validate } from "../middleware/validate";
-import { validateObjectId } from "../middleware/validateObjectId";
+import { requireAuth, AuthedRequest } from "../middleware/requireAuth.js";
+import { validate } from "../middleware/validate.js";
+import { validateObjectId } from "../middleware/validateObjectId.js";
 import {
   CreateTripInputSchema,
   RegenerateDayInputSchema,
   AddActivityInputSchema,
-} from "../shared/schemas";
-import { Trip } from "../models/Trip";
-import { generateTrip } from "../agent/generateTrip";
-import { regenerateDay } from "../agent/regenerateDay";
-import { suggestHotels } from "../agent/suggestHotels";
+} from "../shared/schemas.js";
+import { Trip } from "../models/Trip.js";
+import { generateTrip } from "../agent/generateTrip.js";
+import { regenerateDay } from "../agent/regenerateDay.js";
+import { suggestHotels } from "../agent/suggestHotels.js";
 
 const router = Router();
 
