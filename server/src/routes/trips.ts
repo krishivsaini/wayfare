@@ -148,7 +148,18 @@ router.post(
       });
       await trip.save();
 
-      res.json({ data: trip, budgetCheck: regen.budgetCheck });
+      // Keep the { data: T } envelope the client's request() helper unwraps,
+      // and map budgetCheck to the client BudgetCheck shape { remaining, usedByDay, ok }.
+      res.json({
+        data: {
+          trip,
+          budgetCheck: {
+            usedByDay: regen.budgetCheck.regeneratedCostUsd,
+            remaining: regen.budgetCheck.remainingBudgetUsd - regen.budgetCheck.regeneratedCostUsd,
+            ok: regen.budgetCheck.withinBudget,
+          },
+        },
+      });
     } catch (err) {
       next(err);
     }
