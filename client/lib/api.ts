@@ -39,4 +39,24 @@ export const api = {
       `/trips/${tripId}/days/${dayNumber}/activities/${activityId}`,
       { method: "DELETE" }
     ),
+  // PDF is a binary stream, not JSON — bypass `request` and download the blob.
+  // fetch + blob (not <a href>) so the auth cookie is sent cross-origin.
+  exportTripPdf: async (tripId: string): Promise<void> => {
+    const res = await fetch(`${BASE}/trips/${tripId}/export`, {
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error("Failed to export PDF");
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const cd = res.headers.get("Content-Disposition") || "";
+    const match = cd.match(/filename="([^"]+)"/);
+    const filename = match?.[1] || "wayfare-itinerary.pdf";
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  },
 };

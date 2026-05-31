@@ -72,6 +72,7 @@ export default function TripPage({ params }: { params: Promise<{ id: string }> }
         onBack={() => router.push("/dashboard")}
         onRegen={handleRegen}
         onDeleteActivity={handleDeleteActivity}
+        onError={setErr}
       />
       {regenDay !== null && (
         <RegenerateDayDialog

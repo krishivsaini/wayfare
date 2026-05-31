@@ -12,6 +12,7 @@ import { Trip } from "../models/Trip.js";
 import { generateTrip } from "../agent/generateTrip.js";
 import { regenerateDay } from "../agent/regenerateDay.js";
 import { suggestHotels } from "../agent/suggestHotels.js";
+import { buildTripPdf } from "../services/pdfExport.js";
 
 const router = Router();
 
@@ -66,6 +67,37 @@ router.get("/:id", requireAuth, validateObjectId("id"), async (req: Request, res
     next(err);
   }
 });
+
+router.get(
+  "/:id/export",
+  requireAuth,
+  validateObjectId("id"),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { user } = req as AuthedRequest;
+      const trip = await Trip.findOne({ _id: req.params.id, userId: user.id });
+      if (!trip) return res.status(404).json({ error: "Trip not found" });
+
+      // <destination>-<numDays>day-itinerary.pdf — lowercased, spaces→hyphens, non-ASCII stripped
+      const safeName = `${trip.destination}-${trip.numDays}day-itinerary`
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[^\x00-\x7F]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-]/g, "")
+        .replace(/-+/g, "-");
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", `attachment; filename="${safeName}.pdf"`);
+
+      const doc = buildTripPdf(trip);
+      doc.pipe(res);
+      doc.end();
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 router.delete("/:id", requireAuth, validateObjectId("id"), async (req: Request, res: Response, next: NextFunction) => {
   try {

@@ -1,19 +1,22 @@
 "use client";
 import { useState } from "react";
 import type { Activity, Day, Hotel, Trip } from "@/lib/types";
+import { api } from "@/lib/api";
 import { HOTEL_TIER_LABEL, TIER_LABEL, dayCost, dayDate, fmtDate, fmtUsd, tripActivitiesSpent } from "@/lib/format";
-import { Button, ConfidenceMeter, TodGlyph, confTone, tierGlyph } from "./ui";
+import { Button, ConfidenceMeter, Spinner, TodGlyph, confTone, tierGlyph } from "./ui";
 
 export function TripDetail({
   trip,
   onBack,
   onRegen,
   onDeleteActivity,
+  onError,
 }: {
   trip: Trip;
   onBack: () => void;
   onRegen: (dayNumber: number) => void;
   onDeleteActivity: (dayNumber: number, activityId: string) => void;
+  onError?: (msg: string) => void;
 }) {
   const spent = tripActivitiesSpent(trip);
   return (
@@ -33,7 +36,7 @@ export function TripDetail({
       >
         ← Trips
       </button>
-      <TripHeader trip={trip} />
+      <TripHeader trip={trip} onError={onError} />
 
       <div
         className="wf-trip-grid"
@@ -70,7 +73,42 @@ export function TripDetail({
   );
 }
 
-function TripHeader({ trip }: { trip: Trip }) {
+function ExportButton({ trip, onError }: { trip: Trip; onError?: (msg: string) => void }) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleExport() {
+    if (loading) return;
+    setLoading(true);
+    try {
+      await api.exportTripPdf(trip.id);
+    } catch (e) {
+      onError?.(e instanceof Error ? e.message : "Failed to export PDF.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Button
+      kind="default"
+      size="sm"
+      onClick={handleExport}
+      disabled={loading}
+      title="Download a PDF of this itinerary"
+      style={{
+        fontFamily: "var(--mono)",
+        fontSize: 11,
+        letterSpacing: ".12em",
+        textTransform: "uppercase",
+      }}
+    >
+      {loading ? <Spinner size={13} color="var(--ink-3)" /> : <PdfIcon />}
+      {loading ? "Exporting…" : "Export PDF"}
+    </Button>
+  );
+}
+
+function TripHeader({ trip, onError }: { trip: Trip; onError?: (msg: string) => void }) {
   const lastDate = dayDate(trip, trip.numDays);
   return (
     <div className="rise">
@@ -101,10 +139,11 @@ function TripHeader({ trip }: { trip: Trip }) {
         }}
       >
         <h1 style={{ fontSize: 36, letterSpacing: "-.03em" }}>{trip.destination}</h1>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
           <span className="label" style={{ display: "inline-flex", gap: 7, alignItems: "center" }}>
             {tierGlyph(trip.budgetTier)} {TIER_LABEL[trip.budgetTier]} budget
           </span>
+          <ExportButton trip={trip} onError={onError} />
         </div>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 16 }}>
@@ -464,6 +503,20 @@ function HotelsCard({ hotels }: { hotels: Hotel[] }) {
         Suggestions only — not bookable in Wayfare.
       </p>
     </div>
+  );
+}
+
+function PdfIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M9 1.5H4.5A1.5 1.5 0 003 3v10a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0013 13V5.5L9 1.5z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M9 1.5V5.5H13" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
   );
 }
 
