@@ -143,3 +143,38 @@ a { color: inherit; }
   .wf-trip-grid { grid-template-columns: 1fr !important; }
   .wf-side { position: static !important; }
 }
+
+/* navbar: keep the email but cap its width so it never crowds the logout */
+@media (max-width: 640px) {
+  .wf-nav { padding: 0 18px !important; }
+  .wf-nav > div { gap: 12px !important; }
+  .wf-nav-email { max-width: 38vw; }
+}
+
+/* below ~440px the email has no room — drop it, keep logo + logout */
+@media (max-width: 440px) {
+  .wf-nav-email,
+  .wf-nav-sep { display: none !important; }
+}
+
+/* dashboard: tighter gutters on phones */
+@media (max-width: 640px) {
+  .wf-dash { padding: 28px 18px 64px !important; }
+}
+
+/* new-trip form: tighter gutters on phones */
+@media (max-width: 640px) {
+  .wf-newtrip { padding: 28px 18px 72px !important; }
+}
+
+/* trip detail: tighter gutters + smaller title on phones */
+@media (max-width: 640px) {
+  .wf-detail { padding: 24px 18px 72px !important; }
+  .wf-detail-title { font-size: 28px !important; }
+}
+
+/* auth: stack to one column, drop the decorative diagram on narrow screens */
+@media (max-width: 820px) {
+  .wf-auth { grid-template-columns: 1fr !important; }
+  .wf-auth-aside { display: none !important; }
+}

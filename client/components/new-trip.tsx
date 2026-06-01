@@ -59,7 +59,7 @@ export function NewTripForm({
   }
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: "40px 28px 90px" }}>
+    <div className="wf-newtrip" style={{ maxWidth: 720, margin: "0 auto", padding: "40px 28px 90px" }}>
       <button
         onClick={onCancel}
         className="label"
@@ -220,7 +220,7 @@ export function NewTripForm({
             </div>
           )}
 
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", rowGap: 10 }}>
             <Button kind="primary" size="lg" type="submit">
               Generate itinerary →
             </Button>

@@ -20,7 +20,7 @@ export function TripDetail({
 }) {
   const spent = tripActivitiesSpent(trip);
   return (
-    <div style={{ maxWidth: 1180, margin: "0 auto", padding: "32px 28px 90px" }}>
+    <div className="wf-detail" style={{ maxWidth: 1180, margin: "0 auto", padding: "32px 28px 90px" }}>
       <button
         onClick={onBack}
         className="label"
@@ -138,7 +138,7 @@ function TripHeader({ trip, onError }: { trip: Trip; onError?: (msg: string) => 
           flexWrap: "wrap",
         }}
       >
-        <h1 style={{ fontSize: 36, letterSpacing: "-.03em" }}>{trip.destination}</h1>
+        <h1 className="wf-detail-title" style={{ fontSize: 36, letterSpacing: "-.03em" }}>{trip.destination}</h1>
         <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
           <span className="label" style={{ display: "inline-flex", gap: 7, alignItems: "center" }}>
             {tierGlyph(trip.budgetTier)} {TIER_LABEL[trip.budgetTier]} budget
@@ -199,6 +199,9 @@ function DayCard({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gap: 12,
+          rowGap: 8,
+          flexWrap: "wrap",
           padding: "16px var(--card-pad)",
           borderBottom: "1px solid var(--line)",
           background: "var(--card-raised)",

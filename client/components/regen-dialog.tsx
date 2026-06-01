@@ -76,10 +76,11 @@ export function RegenerateDayDialog({
         style={{
           width: "100%",
           maxWidth: 480,
+          maxHeight: "calc(100dvh - 40px)",
           background: "var(--card-raised)",
           borderRadius: "var(--r-xl)",
           boxShadow: "var(--shadow-pop)",
-          overflow: "hidden",
+          overflowY: "auto",
           border: "1px solid var(--line)",
         }}
       >

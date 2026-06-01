@@ -307,6 +307,7 @@ export function Navbar({ userEmail, onLogout }: { userEmail: string; onLogout: (
       }}
     >
       <div
+        className="wf-nav"
         style={{
           maxWidth: 1180,
           margin: "0 auto",
@@ -320,11 +321,14 @@ export function Navbar({ userEmail, onLogout }: { userEmail: string; onLogout: (
         <Link href="/dashboard" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
           <Logo />
         </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <span className="label" style={{ color: "var(--ink-3)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 18, minWidth: 0 }}>
+          <span
+            className="label wf-nav-email"
+            style={{ color: "var(--ink-3)", overflow: "hidden", textOverflow: "ellipsis" }}
+          >
             {userEmail}
           </span>
-          <span style={{ width: 1, height: 18, background: "var(--line-2)" }} />
+          <span className="wf-nav-sep" style={{ width: 1, height: 18, background: "var(--line-2)" }} />
           <button
             onClick={onLogout}
             className="label"

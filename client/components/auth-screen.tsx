@@ -42,7 +42,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.05fr)" }}>
+    <div className="wf-auth" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.05fr)" }}>
       {/* form side */}
       <div style={{ display: "flex", flexDirection: "column", padding: "34px 7vw" }}>
         <Link href="/" style={{ textDecoration: "none", width: "fit-content" }}>
@@ -137,6 +137,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
 
       {/* diagram side */}
       <div
+        className="wf-auth-aside"
         style={{
           position: "relative",
           background: "var(--paper-2)",

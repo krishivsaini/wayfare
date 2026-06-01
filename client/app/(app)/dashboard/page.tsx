@@ -38,7 +38,7 @@ export default function DashboardPage() {
 
   if (!trips) {
     return (
-      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
+      <div className="wf-dash" style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
         <div
           className="fade"
           style={{
@@ -59,7 +59,7 @@ export default function DashboardPage() {
   const empty = trips.length === 0;
 
   return (
-    <div style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
+    <div className="wf-dash" style={{ maxWidth: 1180, margin: "0 auto", padding: "44px 28px 80px" }}>
       <div
         style={{
           display: "flex",
@@ -107,7 +107,7 @@ export default function DashboardPage() {
       {empty ? (
         <EmptyTrips />
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))", gap: 18 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(330px, 100%), 1fr))", gap: 18 }}>
           {trips.map((t, i) => (
             <TripCard key={t.id} trip={t} idx={i} onDelete={() => handleDelete(t.id)} />
           ))}
