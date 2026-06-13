@@ -7,11 +7,14 @@ import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from "react";
 /* ---------- Wordmark ---------- */
 export function WayMark({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="10.2" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M12 5.5 L14.7 12 L12 18.5 L9.3 12 Z" fill="var(--accent)" />
-      <circle cx="12" cy="12" r="1.6" fill="var(--card-raised)" stroke="var(--ink)" strokeWidth="1.3" />
-    </svg>
+    <img
+      src="/icon.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{ borderRadius: 4, objectFit: "contain" }}
+      aria-hidden="true"
+    />
   );
 }
 
