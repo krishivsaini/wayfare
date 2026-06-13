@@ -225,7 +225,7 @@ export function NewTripForm({
               Generate itinerary →
             </Button>
             <span className="label" style={{ color: "var(--ink-4)" }}>
-              ~10s · Gemini 2.5 Flash
+              ~10s · Gemini 3.5 Flash
             </span>
           </div>
         </form>

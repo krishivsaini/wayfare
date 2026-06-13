@@ -14,7 +14,7 @@ A multi-user AI trip planner. Users sign up, describe a trip (destination, lengt
 | Database | MongoDB Atlas + Mongoose |
 | Auth | JWT in httpOnly cookies + bcrypt |
 | Validation | Zod (shared schemas — single source of truth) |
-| LLM | Gemini 2.5 Flash via `@google/genai`, structured output with `responseJsonSchema` |
+| LLM | Gemini 3.5 Flash via `@google/genai`, structured output with `responseJsonSchema` |
 | PDF export | PDFKit (server-side itinerary export) |
 | Deploy | Vercel (frontend) + Render (backend) |
 
@@ -99,7 +99,7 @@ MONGO_URI=mongodb+srv://...
 JWT_SECRET=replace_with_64_char_random_string
 JWT_EXPIRES_IN=7d
 GEMINI_API_KEY=
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.5-flash
 CLIENT_ORIGIN=http://localhost:3000
 COOKIE_DOMAIN=          # leave empty in dev
 ```
