@@ -18,6 +18,13 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export const api = {
+  // Render's free tier sleeps the instance after ~15 min idle, so the first
+  // request of a session pays a 30–60s cold start. WakeGate probes /health with
+  // this before anything else renders, so the wait reads as a wait, not a 500.
+  wake: async (signal?: AbortSignal): Promise<void> => {
+    const res = await fetch(`${BASE}/health`, { cache: "no-store", signal });
+    if (!res.ok) throw new Error(`Health check failed: ${res.status}`);
+  },
   signup: (body: { email: string; password: string }) =>
     request<User>("/auth/signup", { method: "POST", body: JSON.stringify(body) }),
   login: (body: { email: string; password: string }) =>

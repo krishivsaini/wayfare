@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import { AuthProvider } from "@/lib/auth-context";
+import { WakeGate } from "@/components/wake-gate";
 import "./globals.css";
 
 const geist = Geist({
@@ -27,7 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${geist.variable} ${jetbrains.variable}`}>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        {/* WakeGate holds the app back until the Render API answers /health,
+            so AuthProvider's /auth/me never fires at a sleeping server. */}
+        <WakeGate>
+          <AuthProvider>{children}</AuthProvider>
+        </WakeGate>
       </body>
     </html>
   );
